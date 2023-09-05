@@ -1,0 +1,33 @@
+{
+  "name": "tegy",
+  "version": "1.0.0",
+  "description": "The backend of Tegy, the Budgeter",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon --exec ts-node-esm ./src/index.ts",
+    "start": "",
+    "test": "vitests",
+    "build": "tsc"
+  },
+  "author": "Justice N.",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/config": "^3.3.1",
+    "@types/express": "^4.17.17",
+    "@types/morgan": "^1.9.5",
+    "@types/node": "^20.5.9",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "config": "^3.3.9",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "firebase-admin": "^11.10.1",
+    "helmet": "^7.0.0",
+    "morgan": "^1.10.0",
+    "zod": "^3.22.2"
+  }
+}

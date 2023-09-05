@@ -1,0 +1,45 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "tegy",
+    "dateExported": "2023-09-05T05:50:28.789Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "01a49819-3f91-4412-a3ab-0824edb43190",
+            "name": "budgets",
+            "containerId": "",
+            "created": "2023-09-05T05:46:56.192Z",
+            "sortNum": 10000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "8bdf1796-1951-4fac-b090-3716892ddfd5",
+            "colId": "e6953639-94db-481c-bd3f-214d8b031741",
+            "containerId": "01a49819-3f91-4412-a3ab-0824edb43190",
+            "name": "/",
+            "url": "http://localhost:3000/api/budgets",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-09-05T05:47:23.624Z",
+            "modified": "2023-09-05T05:47:46.146Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "894e61cd-9ed5-46c4-8c25-01e2482c45a3",
+            "colId": "e6953639-94db-481c-bd3f-214d8b031741",
+            "containerId": "01a49819-3f91-4412-a3ab-0824edb43190",
+            "name": "/:id",
+            "url": "http://localhost:3000/api/budgets/10",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2023-09-05T05:47:58.024Z",
+            "modified": "2023-09-05T05:49:45.525Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        }
+    ]
+}
