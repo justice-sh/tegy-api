@@ -8,7 +8,7 @@
     "dev": "nodemon --exec ts-node-esm ./src/index.ts",
     "start": "",
     "test": "vitests",
-    "build": "tsc"
+    "build": "rimraf dist && tsc"
   },
   "author": "Justice N.",
   "license": "ISC",
@@ -26,6 +26,7 @@
     "@types/morgan": "^1.9.5",
     "@types/node": "^20.5.9",
     "nodemon": "^3.0.1",
+    "rimraf": "^5.0.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
   }
