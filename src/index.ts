@@ -4,6 +4,7 @@ configDotEnv();
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
+import { config } from "./config/index.js";
 
 const app = express();
 
