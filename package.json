@@ -2,13 +2,13 @@
   "name": "tegy",
   "version": "1.0.0",
   "description": "The backend of Tegy, the Budgeter",
-  "main": "index.js",
+  "main": "dist/index.js",
   "type": "module",
   "scripts": {
     "dev": "nodemon --exec ts-node-esm ./src/index.ts",
-    "start": "",
     "test": "vitests",
-    "build": "rimraf dist && tsc"
+    "build": "rimraf dist && tsc",
+    "start": "node dist/index.js"
   },
   "author": "Justice N.",
   "license": "ISC",
