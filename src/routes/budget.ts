@@ -1,16 +1,20 @@
-import router from "express/";
+import express from "express";
+import { z } from "zod";
+import { getZodError } from "src/utilities/getZodError.js";
+
+const router = express.Router();
 
 const budgets: { id: number; name: string }[] = [];
 
-app.get("/api/budgets", (req, res) => {
+router.get("/api/budgets", (req, res) => {
   res.send(budgets);
 });
 
-app.get("/api/budgets/:id", (req, res) => {
+router.get("/api/budgets/:id", (req, res) => {
   res.send({ name: "budget", id: req.params.id });
 });
 
-app.post("/api/budgets", (req, res) => {
+router.post("/api/budgets", (req, res) => {
   const { error } = validateBudget(req.body);
   if (error) return res.status(400).send(getZodError(error));
 
@@ -22,7 +26,7 @@ app.post("/api/budgets", (req, res) => {
   res.send(budget);
 });
 
-app.put("/api/budgets/:id", (req, res) => {
+router.put("/api/budgets/:id", (req, res) => {
   const budget = budgets.find((b) => b.id === +req.params.id);
   if (!budget)
     return res.status(404).send("The budget with the given ID was not found.");
@@ -34,7 +38,7 @@ app.put("/api/budgets/:id", (req, res) => {
   res.send(budget);
 });
 
-app.delete("/api/budgets/:id", (req, res) => {
+router.delete("/api/budgets/:id", (req, res) => {
   const budget = budgets.find((b) => b.id === +req.params.id);
   if (!budget)
     return res.status(404).send("The budget with the given ID was not found.");
@@ -54,3 +58,5 @@ function validateBudget(budget: any) {
 
   return { data, error };
 }
+
+export default router;

@@ -10,7 +10,8 @@
     "outDir": "dist",
     "rootDir": "src",
     "baseUrl": "./",
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true
   },
   "include": [
     "src/**/*"
