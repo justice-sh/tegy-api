@@ -1,3 +1,6 @@
 export default {
-  password: "APP_PASSWORD",
+  db_endpoint: "DB_ENDPOINT",
+  db_project_key: "DB_PROJECT_KEY",
+  db_project_id: "DB_PROJECT_ID",
+  db_id: "DB_ID",
 }

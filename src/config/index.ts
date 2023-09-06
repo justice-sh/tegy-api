@@ -26,10 +26,15 @@ class Config {
   private getValue(key: Key, env: CONFIG_NODE_ENV) {
     let value = Envs[env] as any
 
-    const stringedKey = key as string
-    stringedKey.split(".").forEach((k) => {
-      value = value[k]
-    })
+    const keys = key.split(".") as string[]
+
+    try {
+      keys.forEach((k) => {
+        value = value[k]
+      })
+    } catch (error: any) {
+      console.log(error.message)
+    }
 
     return value
   }

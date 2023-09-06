@@ -2,18 +2,22 @@ import { config as configDotEnv } from "dotenv"
 configDotEnv()
 
 import express from "express"
-import helmet from "helmet"
-import morgan from "morgan"
+import prod from "./startup/prod.js"
+import dev from "./startup/dev.js"
+import routes from "./startup/routes.js"
+import db from "./startup/db.js"
+import { budetModel } from "./models/budget.js"
 
 const app = express()
 
-app.use(express.json())
-app.use(helmet())
+export const databaseClient = db()
 
-if (app.get("env") === "development") {
-  app.use(morgan("tiny"))
-  console.log("Morgan enabled...")
-}
+// budetModel.deleteCollection()
+// budetModel.create("April Budget")
+
+dev(app)
+prod(app)
+routes(app)
 
 app.get("/", (req, res) => {
   res.send("Hello world.")
