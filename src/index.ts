@@ -7,8 +7,8 @@ import prod from "./startup/prod.js"
 import dev from "./startup/dev.js"
 import routes from "./startup/routes.js"
 import error from "./middlewares/error.js"
-import { Budget } from "./models/budget.js"
 import config from "./startup/config.js"
+import winston from "winston"
 
 const app = express()
 
@@ -24,3 +24,5 @@ app.use(error)
 
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Listening on port ${port}...`))
+
+winston.info("Here...")
