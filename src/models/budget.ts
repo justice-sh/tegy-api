@@ -1,6 +1,6 @@
 import { ID } from "node-appwrite"
 import { BudgetData } from "../../types/tegy.js"
-import { dbClient } from "../index.js"
+import { getDBClient } from "../utilities/db.js"
 
 export class Budget {
   private static id = "budgets"
@@ -9,8 +9,8 @@ export class Budget {
   private constructor() {}
 
   static async create(name: string): Promise<BudgetData> {
-    const { db, id } = dbClient
-    const response = await db.createDocument(id, Budget.id, ID.unique(), { name })
+    const { db, dbId } = getDBClient()
+    const response = await db.createDocument(dbId, Budget.id, ID.unique(), { name })
     return { name, id: response.$id, createdAt: response.$createdAt }
   }
 
@@ -25,13 +25,13 @@ export class Budget {
   }
 
   static async createCollection() {
-    const { db, id } = dbClient
-    await db.createCollection(id, Budget.id, Budget.modelName)
-    await db.createStringAttribute(id, Budget.id, "name", 50, true)
+    const { db, dbId } = getDBClient()
+    await db.createCollection(dbId, Budget.id, Budget.modelName)
+    await db.createStringAttribute(dbId, Budget.id, "name", 50, true)
   }
 
   static async deleteCollection() {
-    const { db, id } = dbClient
-    await db.deleteCollection(id, Budget.id)
+    const { db, dbId } = getDBClient()
+    await db.deleteCollection(dbId, Budget.id)
   }
 }

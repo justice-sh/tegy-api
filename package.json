@@ -19,6 +19,7 @@
     "helmet": "^7.0.0",
     "morgan": "^1.10.0",
     "node-appwrite": "^10.0.1",
+    "winston": "^3.10.0",
     "zod": "^3.22.2"
   },
   "devDependencies": {

@@ -6,16 +6,17 @@ import express from "express"
 import prod from "./startup/prod.js"
 import dev from "./startup/dev.js"
 import routes from "./startup/routes.js"
-import db from "./startup/db.js"
 import error from "./middlewares/error.js"
 import { Budget } from "./models/budget.js"
+import config from "./startup/config.js"
 
 const app = express()
 
-export const dbClient = db()
+process.on("unhandledRejection", (ex) => {
+  throw ex
+})
 
-Budget.createCollection()
-
+config()
 dev(app)
 prod(app)
 routes(app)
