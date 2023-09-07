@@ -11,7 +11,7 @@ export class DBTransport extends Transport {
   async log(info: any, callback: () => void) {
     const { db, dbId } = getDBClient()
 
-    await db.createDocument(dbId, "64f9afccdbfb2a36946b", Date.now() + "", { info: JSON.stringify(info) })
+    await db.createDocument(dbId, "log", Date.now() + "", { log: JSON.stringify(info) })
 
     callback()
 
