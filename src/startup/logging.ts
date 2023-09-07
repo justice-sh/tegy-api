@@ -13,7 +13,8 @@ export default function () {
   if (process.env.NODE_ENV !== "production") {
     winston.add(
       new winston.transports.Console({
-        format: winston.format.simple(),
+        format: winston.format.combine(winston.format.colorize(), winston.format.simple()),
+        handleExceptions: true,
       })
     )
   }
