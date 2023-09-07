@@ -1,69 +1,37 @@
 import { ID } from "node-appwrite"
-import { Budget } from "../../types/tegy.js"
-import { databaseClient } from "../index.js"
+import { BudgetData } from "../../types/tegy.js"
+import { dbClient } from "../index.js"
 
-export class BudgetModel {
-  private static instance: BudgetModel | undefined
-
-  private id = "budgets"
-  private name = "Budgets"
+export class Budget {
+  private static id = "budgets"
+  private static modelName = "Budgets"
 
   private constructor() {}
 
-  public static getInstance() {
-    if (!BudgetModel.instance) BudgetModel.instance = new BudgetModel()
-
-    return BudgetModel.instance
+  static async create(name: string): Promise<BudgetData> {
+    const { db, id } = dbClient
+    const response = await db.createDocument(id, Budget.id, ID.unique(), { name })
+    return { name, id: response.$id, createdAt: response.$createdAt }
   }
 
-  async createCollection() {
-    try {
-      const { db, id } = databaseClient
-      await db.createCollection(id, this.id, this.name)
-      await db.createStringAttribute(id, this.id, "name", 50, true)
-    } catch (error: any) {
-      // 409 means the collection already exists
-      if (error.response) {
-        if (error.response?.code !== 409) console.log(error.response)
-      } else {
-        throw error
-      }
-    }
-  }
+  static async update(budget: Budget) {}
 
-  async deleteCollection() {
-    try {
-      const { db, id } = databaseClient
-      await db.deleteCollection(id, this.id)
-    } catch (error: any) {
-      // 409 means the collection already exists
-      // if (error.response.code !== 409) console.log(error.response)
-      console.log(error.response)
-    }
-  }
+  static async delete(id: string) {}
 
-  async create(name: string): Promise<Budget> {
-    try {
-      const { db, id } = databaseClient
-      const response = await db.createDocument(id, this.id, ID.unique(), { name })
-      return { name, id: response.$id, createdAt: response.$createdAt }
-    } catch (error: any) {
-      if (error.response?.code === 404) {
-        await this.createCollection()
-        return this.create(name)
-      } else throw error
-    }
-  }
+  static async get(id: string) {}
 
-  static update(budget: BudgetModel) {}
-
-  static delete(id: string) {}
-
-  static get(id: string) {}
-
-  static getAll() {
+  static async getAll() {
     return []
   }
-}
 
-export const budetModel = BudgetModel.getInstance()
+  static async createCollection() {
+    const { db, id } = dbClient
+    await db.createCollection(id, Budget.id, Budget.modelName)
+    await db.createStringAttribute(id, Budget.id, "name", 50, true)
+  }
+
+  static async deleteCollection() {
+    const { db, id } = dbClient
+    await db.deleteCollection(id, Budget.id)
+  }
+}

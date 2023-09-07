@@ -1,3 +1,4 @@
+import "express-async-errors"
 import { config as configDotEnv } from "dotenv"
 configDotEnv()
 
@@ -6,22 +7,19 @@ import prod from "./startup/prod.js"
 import dev from "./startup/dev.js"
 import routes from "./startup/routes.js"
 import db from "./startup/db.js"
-import { budetModel } from "./models/budget.js"
+import error from "./middlewares/error.js"
+import { Budget } from "./models/budget.js"
 
 const app = express()
 
-export const databaseClient = db()
+export const dbClient = db()
 
-// budetModel.deleteCollection()
-// budetModel.create("April Budget")
+Budget.createCollection()
 
 dev(app)
 prod(app)
 routes(app)
-
-app.get("/", (req, res) => {
-  res.send("Hello world.")
-})
+app.use(error)
 
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Listening on port ${port}...`))

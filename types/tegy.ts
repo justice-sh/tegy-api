@@ -15,7 +15,7 @@ export type User = {
   }
 }
 
-export type Budget = {
+export type BudgetData = {
   id: string
   name: string
   createdAt: string
