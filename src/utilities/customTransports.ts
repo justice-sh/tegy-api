@@ -3,15 +3,17 @@ import { getDBClient } from "./db.js"
 import fs from "fs"
 
 // My transport for logging to my database provider
-export class DBTransport extends Transport {
+class Database extends Transport {
   constructor(opts?: any) {
     super(opts)
   }
 
-  async log(info: any, callback: () => void) {
-    const { db, dbId } = getDBClient()
+  log(info: any, callback: () => void) {
+    if (process.env.NODE_ENV === "production") {
+      const { db, dbId } = getDBClient()
 
-    await db.createDocument(dbId, "log", Date.now() + "", { log: JSON.stringify(info) })
+      db.createDocument(dbId, "log", Date.now() + "", { log: JSON.stringify(info) })
+    }
 
     callback()
 
@@ -21,16 +23,17 @@ export class DBTransport extends Transport {
   }
 }
 
-// My transport for logging for all levels excluding error
-export class FileTransport extends Transport {
+// My transport for logging all levels excluding error
+class File extends Transport {
   constructor(opts?: any) {
     super(opts)
   }
 
   log(info: any, callback: () => void) {
+    const filename = "combined.log"
     // only exclude 'error' level
     if (info.level !== "error") {
-      fs.writeFileSync("combined.log", JSON.stringify(info))
+      fs.appendFileSync(filename, JSON.stringify(info) + "\n")
     }
 
     callback()
@@ -39,4 +42,9 @@ export class FileTransport extends Transport {
       this.emit("logged", info)
     })
   }
+}
+
+export const MyTransport = {
+  Database,
+  File,
 }
