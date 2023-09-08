@@ -7,5 +7,5 @@ export const getDBClient = () => {
     .setProject(config.get("db_project_id"))
     .setKey(config.get("db_project_key"))
 
-  return { db: new Databases(client), dbId: config.get("db_id") }
+  return { handle: new Databases(client), id: config.get<string>("db_id"), name: config.get<string>("db_name") }
 }

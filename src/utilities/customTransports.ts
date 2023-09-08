@@ -10,9 +10,8 @@ class Database extends Transport {
 
   log(info: any, callback: () => void) {
     if (process.env.NODE_ENV === "production") {
-      const { db, dbId } = getDBClient()
-
-      db.createDocument(dbId, "log", Date.now() + "", { log: JSON.stringify(info) })
+      const { handle: db, id } = getDBClient()
+      db.createDocument(id, "log", Date.now() + "", { log: JSON.stringify(info) })
     }
 
     callback()

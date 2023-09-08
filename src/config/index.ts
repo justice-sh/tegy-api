@@ -13,14 +13,14 @@ class Config {
     return Config.instance
   }
 
-  public get(key: Key) {
+  public get<T = any>(key: Key) {
     const env = process.env.NODE_ENV as CONFIG_NODE_ENV
 
     let value = this.getValue(key, env)
 
     if (!value) value = process.env[this.getValue(key, "custom")]
 
-    return value
+    return value as T
   }
 
   private getValue(key: Key, env: CONFIG_NODE_ENV) {

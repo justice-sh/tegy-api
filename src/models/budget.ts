@@ -9,8 +9,8 @@ export class Budget {
   private constructor() {}
 
   static async create(name: string): Promise<BudgetData> {
-    const { db, dbId } = getDBClient()
-    const response = await db.createDocument(dbId, Budget.id, ID.unique(), { name })
+    const db = getDBClient()
+    const response = await db.handle.createDocument(db.id, Budget.id, ID.unique(), { name })
     return { name, id: response.$id, createdAt: response.$createdAt }
   }
 
@@ -25,13 +25,13 @@ export class Budget {
   }
 
   static async createCollection() {
-    const { db, dbId } = getDBClient()
-    await db.createCollection(dbId, Budget.id, Budget.modelName)
-    await db.createStringAttribute(dbId, Budget.id, "name", 50, true)
+    const db = getDBClient()
+    await db.handle.createCollection(db.id, Budget.id, Budget.modelName)
+    await db.handle.createStringAttribute(db.id, Budget.id, "name", 50, true)
   }
 
   static async deleteCollection() {
-    const { db, dbId } = getDBClient()
-    await db.deleteCollection(dbId, Budget.id)
+    const db = getDBClient()
+    await db.handle.deleteCollection(db.id, Budget.id)
   }
 }
