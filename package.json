@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon --exec ts-node-esm ./src/index.ts",
-    "test": "vitests",
+    "test": "vitests --verbose",
     "build": "rimraf dist && tsc",
     "start": "node dist/index.js"
   },
@@ -29,6 +29,7 @@
     "nodemon": "^3.0.1",
     "rimraf": "^5.0.1",
     "ts-node": "^10.9.1",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.3"
   }
 }

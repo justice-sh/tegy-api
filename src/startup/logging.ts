@@ -2,7 +2,8 @@ import winston from "winston"
 import { MyTransport } from "../utilities/customTransports.js"
 
 export default function () {
-  process.on("unhandledRejection", (ex) => {
+  process.on("unhandledRejection", (ex: any) => {
+    if (ex.response && ex.response.code === 409) return
     throw ex
   })
 

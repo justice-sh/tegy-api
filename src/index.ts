@@ -7,12 +7,12 @@ import routes from "./startup/routes.js"
 import error from "./middlewares/error.js"
 import logging from "./startup/logging.js"
 import winston from "winston"
+import db from "./startup/db.js"
 
 configDotEnv()
-
 const app = express()
-
 logging()
+db()
 dev(app)
 prod(app)
 routes(app)
