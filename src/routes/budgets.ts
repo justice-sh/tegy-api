@@ -1,12 +1,14 @@
 import express from "express"
 import { z } from "zod"
 import { getZodError } from "../utilities/getZodError.js"
+import { Budget } from "../models/budget.js"
 
 const router = express.Router()
 
 const budgets: { id: number; name: string }[] = []
 
 router.get("/", async (req, res) => {
+  const budgets = await Budget.find()
   res.send(budgets)
 })
 
