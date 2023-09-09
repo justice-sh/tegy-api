@@ -3,3 +3,98 @@
 {"message":"Listening on port 3000...","level":"info"}
 {"message":"Listening on port 3000...","level":"info"}
 {"message":"Listening on port 3000...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Connected to tegy_testnet...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Connected to tegy_testnet...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Connected to tegy_testnet...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Connected to tegy_test...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Connected to tegy_test...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Connected to tegy_test...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Connected to tegy_test...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Connected to tegy_test...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Connected to tegy_test...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Connected to tegy_test...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Connected to tegy_test...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Connected to tegy_test...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"level":"info","message":"Database already exists"}
+{"level":"info","message":"A collection with the requested ID already exists."}
+{"message":"Connected to tegy_test...","level":"info"}
+{"message":"Connected to tegy_test...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"level":"info","message":"Missing required parameter: \"databaseId\""}
+{"message":"Listening on port 3000...","level":"info"}
+{"level":"info","message":"Missing required parameter: \"name\""}
+{"message":"Listening on port 3000...","level":"info"}
+{"level":"info","message":"Cannot read properties of null (reading 'client')"}
+{"message":"Listening on port 3000...","level":"info"}
+{"level":"info","message":"Cannot read properties of undefined (reading 'call')"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"level":"info","message":"Database already exists"}
+{"level":"info","message":"A collection with the requested ID already exists."}
+{"message":"Connected to tegy_test...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"level":"info","message":"Database already exists"}
+{"level":"info","message":"A collection with the requested ID already exists."}
+{"message":"Connected to tegy_test...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Database already existsin trycatch","level":"info"}
+{"message":"A collection with the requested ID already exists.in trycatch","level":"info"}
+{"message":"Connected to tegy_test...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Database already existsin trycatch","level":"info"}
+{"message":"A collection with the requested ID already exists.in trycatch","level":"info"}
+{"message":"Connected to tegy_test...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Database already existsin trycatch","level":"info"}
+{"message":"A collection with the requested ID already exists.in trycatch","level":"info"}
+{"message":"Connected to tegy_test...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"trycatch error: Database already exists","level":"info"}
+{"message":"trycatch error: A collection with the requested ID already exists.","level":"info"}
+{"message":"Connected to tegy_test...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Connected to tegy_test...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Connected to tegy_test...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Connected to tegy_test...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Connected to tegy_test...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Connected to tegy_test...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Connected to tegy_test...","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Database tegy_test is ready and operational!","level":"info"}
+{"message":"Listening on port 3000...","level":"info"}
+{"message":"Database \"tegy_test\" is ready and operational!","level":"info"}

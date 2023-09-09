@@ -1,4 +1,4 @@
 export default {
   name: "Tegy - production",
-  db_name: "tegy_mainnet",
+  db_name: "tegy",
 }
