@@ -3,3 +3,6 @@ dist
 
 package-lock.json
 .env*
+
+combined.log
+error.log
