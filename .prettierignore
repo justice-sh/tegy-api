@@ -6,3 +6,5 @@ public
 .next
 dist
 yarn.lock
+error.log
+combined.log

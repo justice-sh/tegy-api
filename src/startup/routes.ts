@@ -1,5 +1,5 @@
 import express, { Express } from "express"
-import budget from "../routes/budget.js"
+import budget from "../routes/budgets.js"
 import home from "../routes/home.js"
 
 export default function (app: Express) {
