@@ -1,6 +1,6 @@
 import Transport from "winston-transport"
-import { getDBClient } from "./db.js"
 import fs from "fs"
+import { getFirestore } from "firebase-admin/firestore"
 
 // My transport for logging to my database provider
 class Database extends Transport {
@@ -9,10 +9,7 @@ class Database extends Transport {
   }
 
   log(info: any, callback: () => void) {
-    if (process.env.NODE_ENV === "production") {
-      const { db: db, dbId: id } = getDBClient()
-      db.createDocument(id, "log", Date.now() + "", { log: JSON.stringify(info) })
-    }
+    getFirestore().collection("logs").add(info)
 
     callback()
 
