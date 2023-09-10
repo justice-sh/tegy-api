@@ -1,5 +1,86 @@
-import { ID, Models, Query } from "node-appwrite"
-import { getDBClient } from "../utilities/db.js"
+import { getFirestore } from "firebase-admin/firestore"
+
+type InputData = { name: string; userId: string }
+
+type BudgetData = {
+  id: string
+  name: string
+  createdAt: number
+  updatedAt: number
+}
+
+type DocSnapshot = FirebaseFirestore.DocumentSnapshot<FirebaseFirestore.DocumentData>
+type BudgetDoc = BudgetData & InputData
+
+export class Budget {
+  private static id = "budgets"
+
+  private constructor() {}
+
+  static async test() {}
+
+  static async create(data: InputData): Promise<BudgetData> {
+    const docRef = getFirestore().collection(Budget.id).doc()
+
+    const createdAt = Date.now()
+    const budget: BudgetData = {
+      ...data,
+      id: docRef.id,
+      createdAt,
+      updatedAt: createdAt,
+    }
+
+    await docRef.set(budget)
+    const doc = await docRef.get()
+    return Budget.getData(doc)
+  }
+
+  static async find(param: Partial<BudgetDoc> = {}): Promise<BudgetData[]> {
+    const paramKeys = Object.keys(param) as (keyof BudgetDoc)[]
+
+    let colRef = getFirestore().collection(Budget.id)
+
+    if (paramKeys.length) {
+      paramKeys.forEach((key) => {
+        colRef = colRef.where(key, "==", param[key]) as any
+      })
+    }
+
+    const list = await colRef.get()
+
+    return list.docs.map(Budget.getData) as BudgetData[]
+  }
+
+  static async update(id: string, data: Pick<InputData, "name">): Promise<BudgetData> {
+    const docRef = getFirestore().collection(Budget.id).doc(id)
+    await docRef.update({ ...data, updatedAt: Date.now() })
+    const doc = await docRef.get()
+    return Budget.getData(doc)
+  }
+
+  static async delete(id: string) {
+    await getFirestore().collection(Budget.id).doc(id).delete()
+  }
+
+  static async createMany(data: InputData[]): Promise<BudgetData[]> {
+    return Promise.all(data.map(Budget.create))
+  }
+
+  private static getData(doc: DocSnapshot): BudgetData {
+    const data = doc.data() as BudgetDoc
+    delete (data as any).userId
+    return data
+  }
+
+  private static async clear() {
+    const docs = await getFirestore().collection(Budget.id).listDocuments()
+    await Promise.all(docs.map((d) => d.delete()))
+  }
+}
+
+/***
+ * import { ID, Models, Query } from "node-appwrite"
+import { getDBClient, getFirestoreDB } from "../utilities/db.js"
 
 type InputData = { name: string; userId: string }
 
@@ -20,7 +101,10 @@ export class Budget {
 
   private constructor() {}
 
-  static async test() {}
+  static async test() {
+    const d = await Budget.create2({ name: "Budget1", userId: "user1" })
+    console.log(d)
+  }
 
   static async create(data: InputData): Promise<BudgetData> {
     const { db, dbId } = getDBClient()
@@ -96,3 +180,5 @@ export class Budget {
     console.log("Collection deleted!")
   }
 }
+
+ */

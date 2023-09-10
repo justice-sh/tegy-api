@@ -11,8 +11,8 @@ import db from "./startup/db.js"
 
 configDotEnv()
 const app = express()
-logging()
 db()
+logging()
 dev(app)
 prod(app)
 routes(app)
