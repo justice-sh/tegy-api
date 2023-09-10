@@ -10,9 +10,12 @@ import winston from "winston"
 import db from "./startup/db.js"
 
 configDotEnv()
+
 const app = express()
+
 db()
 logging()
+
 dev(app)
 prod(app)
 routes(app)
