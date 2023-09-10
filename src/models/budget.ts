@@ -72,7 +72,7 @@ export class Budget {
     return data
   }
 
-  private static async clear() {
+  static async clear() {
     const docs = await getFirestore().collection(Budget.id).listDocuments()
     await Promise.all(docs.map((d) => d.delete()))
   }

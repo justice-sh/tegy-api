@@ -12,8 +12,12 @@ router.get("/", async (req, res) => {
   res.send(budgets)
 })
 
-router.get("/:id", (req, res) => {
-  res.send({ name: "budget", id: req.params.id })
+router.get("/:id", async (req, res) => {
+  const [budget] = await Budget.find({ id: req.params.id })
+
+  if (!budget) return res.status(404).send("The budget with the given ID was not found.")
+
+  res.send(budget)
 })
 
 router.post("/", async (req, res) => {
