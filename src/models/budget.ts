@@ -17,17 +17,19 @@ export class Budget {
 
   private constructor() {}
 
-  static async test() {}
+  static async test() {
+    // await Budget.clear()
+    // console.log("Done")
+  }
 
   static async create(data: InputData): Promise<BudgetData> {
     const docRef = getFirestore().collection(Budget.id).doc()
 
-    const createdAt = Date.now()
     const budget: BudgetData = {
       ...data,
       id: docRef.id,
-      createdAt,
-      updatedAt: createdAt,
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
     }
 
     await docRef.set(budget)
@@ -67,9 +69,9 @@ export class Budget {
   }
 
   private static getData(doc: DocSnapshot): BudgetData {
-    const data = doc.data() as BudgetDoc
-    delete (data as any).userId
-    return data
+    const data = doc.data() as Partial<BudgetDoc>
+    delete data.userId
+    return data as BudgetDoc
   }
 
   static async clear() {
