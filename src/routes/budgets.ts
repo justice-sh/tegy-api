@@ -1,6 +1,6 @@
 import express from "express"
 import { z } from "zod"
-import { getZodError } from "../utilities/getZodError.js"
+import { safeParseReturn } from "../utilities/zod.js"
 import { Budget } from "../models/budget.js"
 
 const router = express.Router()
@@ -22,7 +22,7 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   const { error } = validateBudget(req.body)
-  if (error) return res.status(400).send(getZodError(error))
+  if (error) return res.status(400).send(error)
 
   // const budget = new BudgetModel(req.body.name)
 
@@ -34,7 +34,7 @@ router.put("/:id", (req, res) => {
   if (!budget) return res.status(404).send("The budget with the given ID was not found.")
 
   const { error } = validateBudget(req.body)
-  if (error) return res.status(400).send(getZodError(error))
+  if (error) return res.status(400).send(error)
 
   budget.name = req.body.name
   res.send(budget)
@@ -53,11 +53,7 @@ router.delete("/:id", (req, res) => {
 function validateBudget(budget: any) {
   const Schema = z.object({ name: z.string().min(3) })
   const result = Schema.safeParse(budget)
-
-  const data = result.success ? result.data : null
-  const error = !result.success ? result.error : null
-
-  return { data, error }
+  return safeParseReturn(result)
 }
 
 export default router

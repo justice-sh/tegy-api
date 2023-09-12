@@ -17,10 +17,7 @@ export class Budget {
 
   private constructor() {}
 
-  static async test() {
-    // await Budget.clear()
-    // console.log("Done")
-  }
+  static async test() {}
 
   static async create(data: InputData): Promise<BudgetData> {
     const docRef = getFirestore().collection(Budget.id).doc()

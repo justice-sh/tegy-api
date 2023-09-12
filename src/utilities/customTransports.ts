@@ -5,17 +5,27 @@ import { getFirestore } from "firebase-admin/firestore"
 // My transport for logging to my database provider
 class Database extends Transport {
   constructor(opts?: any) {
-    super(opts)
+    super({ ...opts, handleExceptions: true })
   }
 
   log(info: any, callback: () => void) {
-    getFirestore().collection("logs").add(info)
+    console.log("Called...")
 
-    callback()
+    getFirestore()
+      .collection("logs")
+      .add({
+        date: info.date || new Date().toDateString(),
+        message: info.message,
+        level: info.level,
+        error: info.error,
+      })
+      .then((v) => {
+        callback()
 
-    setImmediate(() => {
-      this.emit("logged", info)
-    })
+        setImmediate(() => {
+          this.emit("logged", info)
+        })
+      })
   }
 }
 
