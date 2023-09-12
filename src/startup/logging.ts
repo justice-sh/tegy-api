@@ -8,8 +8,8 @@ export default function () {
 
   winston.add(new winston.transports.File({ filename: "error.log", level: "error", handleExceptions: true }))
   winston.add(new MyTransport.File())
-
-  if (process.env.NODE_ENV !== "production") winston.add(new MyTransport.Database())
+  winston.add(new MyTransport.Database())
+  // if (process.env.NODE_ENV === "production") winston.add(new MyTransport.Database())
 
   if (process.env.NODE_ENV !== "production") {
     winston.add(

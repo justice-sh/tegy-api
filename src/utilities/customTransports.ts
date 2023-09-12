@@ -9,15 +9,12 @@ class Database extends Transport {
   }
 
   log(info: any, callback: () => void) {
-    console.log("Called...")
-
+    const { os, error, process, trace, ...rest } = info
     getFirestore()
       .collection("logs")
       .add({
-        date: info.date || new Date().toDateString(),
-        message: info.message,
-        level: info.level,
-        error: info.error,
+        ...rest,
+        timestamp: Date.now(),
       })
       .then((v) => {
         callback()
