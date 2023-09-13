@@ -15,6 +15,7 @@ class Database extends Transport {
       .add({
         ...rest,
         timestamp: Date.now(),
+        date: rest.date || new Date(),
       })
       .then((v) => {
         callback()
