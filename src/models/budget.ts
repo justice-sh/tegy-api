@@ -22,7 +22,7 @@ export class Budget {
   static async create(data: InputData): Promise<BudgetData> {
     const docRef = getFirestore().collection(Budget.id).doc()
 
-    const budget: BudgetData = {
+    const budget: BudgetDoc = {
       ...data,
       id: docRef.id,
       createdAt: Date.now(),

@@ -69,12 +69,17 @@ export class User {
   }
 
   static generateAuthToken(data: UserDoc) {
-    const token = jwt.sign(User.getData(data), config.get("jwt_private_key"))
+    const token = jwt.sign({ id: data.id, isAdmin: data.isAdmin }, config.get("jwt_private_key"))
     return token
   }
 }
 
-const Schema = z.object({ name: z.string().min(3), email: z.string().email(), password: z.string().min(5) })
+const Schema = z.object({
+  name: z.string().min(3),
+  email: z.string().email(),
+  password: z.string().min(5),
+  isAdmin: z.boolean().optional(),
+})
 
 type InputData = z.infer<typeof Schema>
 
