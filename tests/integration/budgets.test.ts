@@ -1,11 +1,18 @@
-import { afterEach, describe, expect, it } from "vitest"
+import { afterEach, beforeEach, describe, expect, it } from "vitest"
 import request from "supertest"
 import { Budget } from "../../src/models/budget"
-import server from "../../src/index.js"
+import { IncomingMessage, Server, ServerResponse } from "http"
+
+let server: Server<typeof IncomingMessage, typeof ServerResponse>
 
 describe("/api/budgets", () => {
+  beforeEach(async () => {
+    server = (await import("../../src/index.js")).default
+  })
+
   afterEach(async () => {
     await Budget.clear()
+    server.close()
   })
 
   describe("GET /", () => {
@@ -19,8 +26,16 @@ describe("/api/budgets", () => {
 
       expect(res.status).toBe(200)
       expect(res.body.length).toBe(2)
-      expect(res.body[0]).toHaveProperty("name", "budget1")
-      expect(res.body[1]).toHaveProperty("name", "budget2")
+
+      expect(res.body[0]).not.toHaveProperty("userId", "user1")
+      expect(res.body[1]).not.toHaveProperty("userId", "user2")
+
+      expect(res.body).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ name: "budget1" }),
+          expect.objectContaining({ name: "budget2" }),
+        ])
+      )
     })
   })
 

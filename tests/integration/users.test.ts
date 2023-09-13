@@ -1,11 +1,18 @@
-import { afterEach, describe, expect, it } from "vitest"
+import { afterEach, beforeEach, describe, expect, it } from "vitest"
 import request from "supertest"
 import { User } from "../../src/models/user"
-import server from "../../src/index.js"
+import { IncomingMessage, Server, ServerResponse } from "http"
+
+let server: Server<typeof IncomingMessage, typeof ServerResponse>
 
 describe("/api/users", () => {
+  beforeEach(async () => {
+    server = (await import("../../src/index.js")).default
+  })
+
   afterEach(async () => {
     await User.clear()
+    server.close()
   })
 
   describe("POST /", () => {
