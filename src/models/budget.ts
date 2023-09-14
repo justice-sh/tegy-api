@@ -1,16 +1,6 @@
 import { getFirestore } from "firebase-admin/firestore"
-
-type InputData = { name: string; userId: string }
-
-type BudgetData = {
-  id: string
-  name: string
-  createdAt: number
-  updatedAt: number
-}
-
-type DocSnapshot = FirebaseFirestore.DocumentSnapshot<FirebaseFirestore.DocumentData>
-type BudgetDoc = BudgetData & InputData
+import { z } from "zod"
+import { safeParseReturn } from "../utilities/zod.js"
 
 export class Budget {
   private static id = "budgets"
@@ -75,7 +65,25 @@ export class Budget {
     const docs = await getFirestore().collection(Budget.id).listDocuments()
     await Promise.all(docs.map((d) => d.delete()))
   }
+
+  static validate(data: InputData) {
+    return safeParseReturn(Schema.safeParse(data))
+  }
 }
+
+const Schema = z.object({ name: z.string().min(3), userId: z.string().min(3) })
+
+type InputData = z.infer<typeof Schema>
+
+type BudgetData = {
+  id: string
+  name: string
+  createdAt: number
+  updatedAt: number
+}
+
+type DocSnapshot = FirebaseFirestore.DocumentSnapshot<FirebaseFirestore.DocumentData>
+type BudgetDoc = BudgetData & InputData
 
 /***
  * import { ID, Models, Query } from "node-appwrite"

@@ -5,7 +5,7 @@ import { getFirestore } from "firebase-admin/firestore"
 // My transport for logging to my database provider
 class Database extends Transport {
   constructor(opts?: any) {
-    super({ ...opts, handleExceptions: true })
+    super({ ...opts })
   }
 
   log(info: any, callback: () => void) {
