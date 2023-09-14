@@ -23,38 +23,58 @@ describe("/api/users", () => {
     })
   })
 
-  // describe("GET /", () => {
-  //   it("should return all budgets", async () => {
-  //     await User.createMany([
-  //       { name: "budget1", userId: "user1" },
-  //       { name: "budget2", userId: "user2" },
-  //     ])
+  describe("GET /me", () => {
+    let token = "",
+      id = ""
 
-  //     const res = await request(server).get("/api/budgets")
+    const exec = () => request(server).get("/api/users/me").set("x-auth-token", token)
 
-  //     expect(res.status).toBe(200)
-  //     expect(res.body.length).toBe(2)
-  //     expect(res.body[0]).toHaveProperty("name", "budget1")
-  //     expect(res.body[1]).toHaveProperty("name", "budget2")
-  //   })
-  // })
+    beforeEach(() => {
+      token = User.generateAuthToken({ id } as any)
+    })
 
-  // describe("GET /:id", () => {
-  //   it("should return 404 if budget with ID was not found", async () => {
-  //     await User.create({ name: "budget1", userId: "user1" })
+    it("should return 401 if client is not logged in", async () => {
+      token = ""
 
-  //     const res = await request(server).get("/api/budgets/" + "noexisting")
+      const res = await exec()
 
-  //     expect(res.status).toBe(404)
-  //   })
+      expect(res.status).toBe(401)
+    })
 
-  //   it("should return a single budget", async () => {
-  //     const budget = await User.create({ name: "budget1", userId: "user1" })
+    it("should return 400 if token does not include an ID property", async () => {
+      id = ""
 
-  //     const res = await request(server).get("/api/budgets/" + budget.id)
+      const res = await exec()
 
-  //     expect(res.status).toBe(200)
-  //     expect(res.body).toHaveProperty("name", "budget1")
-  //   })
-  // })
+      expect(res.status).toBe(400)
+    })
+
+    it("should return 404 if user with given ID was not found", async () => {
+      token = User.generateAuthToken({ id: "kdkdk" } as any)
+
+      const res = await exec()
+
+      expect(res.status).toBe(404)
+    })
+
+    it("should return user if valid", async () => {
+      const user = await User.create({ name: "justice", email: "me@gmail.com", password: "123456" })
+      token = User.generateAuthToken(user)
+
+      const res = await exec()
+
+      expect(res.status).toBe(200)
+      expect(res.body).toEqual(expect.objectContaining({ id: user.id, name: user.name, email: user.email }))
+    })
+
+    it("should not return user's password", async () => {
+      const user = await User.create({ name: "justice", email: "me@gmail.com", password: "123456" })
+      token = User.generateAuthToken(user)
+
+      const res = await exec()
+
+      expect(res.status).toBe(200)
+      expect(res.body).not.toHaveProperty("password")
+    })
+  })
 })

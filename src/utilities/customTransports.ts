@@ -10,6 +10,7 @@ class Database extends Transport {
 
   log(info: any, callback: () => void) {
     const { os, error, process, trace, ...rest } = info
+
     getFirestore()
       .collection("logs")
       .add({

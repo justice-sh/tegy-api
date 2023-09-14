@@ -6,9 +6,13 @@ import auth from "../middlewares/auth.js"
 const router = express.Router()
 
 router.get("/me", auth, async (req, res) => {
+  if (!req.params.user.id) return res.status(400).send("Invalid token. ID field is missing.")
+
   const [user] = await User.find({ id: req.params.user.id })
 
-  res.send(User.getData(user!))
+  if (!user) return res.status(404).send("User not found.")
+
+  res.send(User.getData(user))
 })
 
 router.post("/", async (req, res) => {

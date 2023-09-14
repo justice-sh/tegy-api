@@ -162,19 +162,42 @@ describe("/api/budgets", () => {
   })
 
   describe("DELETE /:id", () => {
+    let name = "",
+      token = "",
+      id = "123"
+
+    const exec = () =>
+      request(server)
+        .delete("/api/budgets/" + id)
+        .set("x-auth-token", token)
+
+    beforeEach(() => {
+      name = "budget1"
+      token = User.generateAuthToken({ id: "user1" } as any)
+    })
+
+    it("should return 401 if client is not logged in", async () => {
+      token = ""
+
+      const res = await exec()
+
+      expect(res.status).toBe(401)
+    })
+
     it("should return 400 if budget with given ID does not exist", async () => {
-      const res = await request(server).delete("/api/budgets/dkdk")
+      const res = await exec()
 
       expect(res.status).toBe(400)
     })
 
-    it("should return a single budget", async () => {
-      const budget = await Budget.create({ name: "budget1", userId: "user1" })
+    it("should delete budget if found", async () => {
+      const budget = await Budget.create({ name, userId: "user1" })
+      id = budget.id
 
-      const res = await request(server).get("/api/budgets/" + budget.id)
+      const res = await exec()
 
       expect(res.status).toBe(200)
-      expect(res.body).toHaveProperty("name", "budget1")
+      expect(res.body).toEqual(expect.objectContaining({ name, id }))
     })
   })
 })

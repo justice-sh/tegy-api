@@ -33,7 +33,7 @@ export class User {
 
     if (paramKeys.length) {
       paramKeys.forEach((key) => {
-        colRef = colRef.where(key, "==", param[key]) as any
+        colRef = colRef.where(key, "==", param[key] ?? "") as any
       })
     }
 
