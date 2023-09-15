@@ -19,9 +19,9 @@ describe("/api/budgets", () => {
 
   describe("GET /", () => {
     it("should return all budgets", async () => {
-      await Budget.createMany([
-        { name: "budget1", userId: "user1" },
-        { name: "budget2", userId: "user2" },
+      await Promise.all([
+        Budget.create({ name: "budget1", userId: "user1" }),
+        Budget.create({ name: "budget2", userId: "user2" }),
       ])
 
       const res = await request(server).get("/api/budgets")

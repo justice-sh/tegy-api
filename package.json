@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nodemon --exec ts-node-esm ./src/index.ts",
     "test": "vitest --reporter verbose",
-    "test:cov": "vitest --coverage",
+    "test:coverage": "vitest run --coverage",
     "build": "rimraf dist && tsc",
     "start": "node dist/index.js"
   },
