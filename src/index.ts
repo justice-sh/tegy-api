@@ -23,20 +23,10 @@ routes(app)
 app.use(error)
 
 const PORT = process.env.PORT || 3000
-const server = app.listen(PORT, () => winston.info(`Listening on port ${PORT}...`))
 
-server.on("error", (e: any) => {
-  if (e.code === "EADDRINUSE") {
-    console.error("Address in use, retrying...")
-    setTimeout(() => {
-      server.close()
-      server.listen(PORT)
-    }, 1000)
-  }
-})
-
-if (process.env.NODE_ENV === "test") {
-  server.close()
+if (process.env.NODE_ENV !== "test") {
+  console.log("Starting listener...")
+  app.listen(PORT, () => winston.info(`Listening on port ${PORT}...`))
 }
 
-export { server, PORT, app }
+export { app, PORT }

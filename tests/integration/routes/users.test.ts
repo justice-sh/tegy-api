@@ -1,16 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest"
 import request from "supertest"
 import { User } from "../../../src/models/user"
-import { server, PORT } from "../../../src/index.js"
+import { app } from "../../../src/index.js"
 
 describe("/api/users", () => {
-  beforeEach(async () => {
-    server.listen(PORT)
-  })
-
   afterEach(async () => {
     await User.clear()
-    server.close()
   })
 
   describe("POST /", () => {
@@ -18,7 +13,7 @@ describe("/api/users", () => {
       password = "",
       email = ""
 
-    const exec = () => request(server).post("/api/users").send({ name, password, email })
+    const exec = () => request(app).post("/api/users").send({ name, password, email })
 
     beforeEach(() => {
       name = "user1"
@@ -73,7 +68,7 @@ describe("/api/users", () => {
     let token = "",
       id = ""
 
-    const exec = () => request(server).get("/api/users/me").set("x-auth-token", token)
+    const exec = () => request(app).get("/api/users/me").set("x-auth-token", token)
 
     beforeEach(() => {
       token = User.generateAuthToken({ id } as any)

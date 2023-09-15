@@ -3,14 +3,14 @@ import { z } from "zod"
 import { safeParseReturn } from "../utilities/zod.js"
 
 export class Budget {
-  private static id = "budgets"
+  private static name_ = "budgets"
 
   private constructor() {}
 
   static async test() {}
 
   static async create(data: InputData): Promise<BudgetDoc> {
-    const docRef = getFirestore().collection(Budget.id).doc()
+    const docRef = getFirestore().collection(Budget.name_).doc()
 
     const budget: BudgetDoc = {
       ...data,
@@ -26,7 +26,7 @@ export class Budget {
   static async find(param: Partial<BudgetDoc> = {}) {
     const paramKeys = Object.keys(param) as (keyof BudgetDoc)[]
 
-    let colRef = getFirestore().collection(Budget.id)
+    let colRef = getFirestore().collection(Budget.name_)
 
     if (paramKeys.length) {
       paramKeys.forEach((key) => {
@@ -40,18 +40,18 @@ export class Budget {
   }
 
   static async update(id: string, data: Pick<InputData, "name">) {
-    const docRef = getFirestore().collection(Budget.id).doc(id)
+    const docRef = getFirestore().collection(Budget.name_).doc(id)
     await docRef.update({ ...data, updatedAt: Date.now() })
     const doc = await docRef.get()
     return doc.data() as BudgetDoc
   }
 
   static async delete(id: string) {
-    await getFirestore().collection(Budget.id).doc(id).delete()
+    await getFirestore().collection(Budget.name_).doc(id).delete()
   }
 
   static async clear() {
-    const docs = await getFirestore().collection(Budget.id).listDocuments()
+    const docs = await getFirestore().collection(Budget.name_).listDocuments()
     await Promise.all(docs.map((d) => d.delete()))
   }
 

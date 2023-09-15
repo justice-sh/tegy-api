@@ -11,8 +11,6 @@ describe("/api/budgets", () => {
 
   describe("GET /:id", () => {
     it("should return 404 if budget with given ID was not found", async () => {
-      await Budget.create({ name: "budget1", userId: "user1" })
-
       const res = await request(app).get("/api/budgets/dkdk")
 
       expect(res.status).toBe(404)
@@ -20,6 +18,9 @@ describe("/api/budgets", () => {
 
     it("should return a single budget", async () => {
       const budget = await Budget.create({ name: "budget1", userId: "user1" })
+
+      const [found] = await Budget.find({ id: budget.id })
+      console.log(budget.id, found.id, budget.id === found.id)
 
       const res = await request(app).get("/api/budgets/" + budget.id)
 

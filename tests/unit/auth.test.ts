@@ -2,12 +2,11 @@ import { Request, Response } from "express"
 import { describe, expect, it, vi } from "vitest"
 import auth from "../../src/middlewares/auth"
 import { User } from "../../src/models/user"
-import { server, PORT } from "../../src/index.js"
+import { PORT, app } from "../../src/index.js"
 
 describe("auth middleware", () => {
   it("should populate req.params.user with the payload of a valid JWT", () => {
-    server.listen(PORT)
-
+    const server = app.listen(PORT)
     const user = { id: "userid" }
     const token = User.generateAuthToken(user as any)
 
@@ -20,7 +19,6 @@ describe("auth middleware", () => {
     auth(req, res, next)
 
     expect(req.params.user).toMatchObject(user)
-
     server.close()
   })
 })
