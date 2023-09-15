@@ -68,8 +68,8 @@ export class User {
     return safeParseReturn(result)
   }
 
-  static generateAuthToken(data: UserDoc) {
-    const token = jwt.sign({ id: data.id, isAdmin: data.isAdmin }, config.get("jwt_private_key"))
+  static generateAuthToken({ id, isAdmin }: UserDoc) {
+    const token = jwt.sign({ id, isAdmin }, config.get("jwt_private_key"))
     return token
   }
 }
