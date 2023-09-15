@@ -1,13 +1,9 @@
-import { afterEach, beforeEach, describe, expect, it } from "vitest"
+import { afterEach, beforeEach, describe, expect, test } from "vitest"
 import request from "supertest"
 import { User } from "../../../src/models/user"
 import app from "../../../src/app.js"
 
 describe("/api/users", () => {
-  afterEach(async () => {
-    await User.clear()
-  })
-
   describe("POST /", () => {
     let name = "",
       password = "",
@@ -21,7 +17,11 @@ describe("/api/users", () => {
       email = "me@gmail.com"
     })
 
-    it("should return 400 if name is less than 3 characters", async () => {
+    afterEach(async () => {
+      await User.clear()
+    })
+
+    test("should return 400 if name is less than 3 characters", async () => {
       name = "us"
 
       const res = await exec()
@@ -29,7 +29,7 @@ describe("/api/users", () => {
       expect(res.status).toBe(400)
     })
 
-    it("should return 400 if password is not valid", async () => {
+    test("should return 400 if password is not valid", async () => {
       password = "1234"
 
       const res = await exec()
@@ -37,7 +37,7 @@ describe("/api/users", () => {
       expect(res.status).toBe(400)
     })
 
-    it("should return 400 if email is not valid", async () => {
+    test("should return 400 if email is not valid", async () => {
       email = "dkd"
 
       const res = await exec()
@@ -45,7 +45,7 @@ describe("/api/users", () => {
       expect(res.status).toBe(400)
     })
 
-    it("should return 400 if user with email already exist", async () => {
+    test("should return 400 if user with email already exist", async () => {
       await User.create({ name, email, password })
 
       const res = await exec()
@@ -53,7 +53,7 @@ describe("/api/users", () => {
       expect(res.status).toBe(400)
     })
 
-    it("should create user if valid", async () => {
+    test("should create user if valid", async () => {
       const res = await exec()
 
       const [user] = await User.find({ email })
@@ -74,7 +74,11 @@ describe("/api/users", () => {
       token = User.generateAuthToken({ id } as any)
     })
 
-    it("should return 401 if client is not logged in", async () => {
+    afterEach(async () => {
+      await User.clear()
+    })
+
+    test("should return 401 if client is not logged in", async () => {
       token = ""
 
       const res = await exec()
@@ -82,7 +86,7 @@ describe("/api/users", () => {
       expect(res.status).toBe(401)
     })
 
-    it("should return 400 if token does not include an ID property", async () => {
+    test("should return 400 if token does not include an ID property", async () => {
       id = ""
 
       const res = await exec()
@@ -90,7 +94,7 @@ describe("/api/users", () => {
       expect(res.status).toBe(400)
     })
 
-    it("should return 404 if user with given ID was not found", async () => {
+    test("should return 404 if user with given ID was not found", async () => {
       token = User.generateAuthToken({ id: "lkdlddjldjdkddkd" } as any)
 
       const res = await exec()
@@ -98,7 +102,7 @@ describe("/api/users", () => {
       expect(res.status).toBe(404)
     })
 
-    it("should return user if valid", async () => {
+    test("should return user if valid", async () => {
       const user = await User.create({ name: "justice", email: "me@gmail.com", password: "123456" })
       token = User.generateAuthToken(user)
 
@@ -108,7 +112,7 @@ describe("/api/users", () => {
       expect(res.body).toEqual(expect.objectContaining({ id: user.id, name: user.name, email: user.email }))
     })
 
-    it("should not return user's password", async () => {
+    test("should not return user's password", async () => {
       const user = await User.create({ name: "justice", email: "me@gmail.com", password: "123456" })
       token = User.generateAuthToken(user)
 

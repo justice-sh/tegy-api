@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, test } from "vitest"
+import { afterEach, beforeEach, describe, expect, test } from "vitest"
 import request from "supertest"
 import bcrypt from "bcrypt"
 import { User } from "../../../src/models/user.js"
@@ -13,6 +13,10 @@ describe("/api/auth", () => {
     name = "Justice"
     email = "authtest@gmail.com"
     password = "Password#1"
+  })
+
+  afterEach(async () => {
+    await User.clear()
   })
 
   const exec = () => request(app).post("/api/auth").send({ email, password })
@@ -50,7 +54,6 @@ describe("/api/auth", () => {
     const res = await exec()
 
     expect(res.status).toBe(400)
-    await User.clear()
   })
 
   test("should return valid JWT if request payload is valid", async () => {
@@ -65,6 +68,5 @@ describe("/api/auth", () => {
 
     expect(res.status).toBe(200)
     expect(res.text).toBe(token)
-    await User.clear()
   })
 })
