@@ -22,9 +22,21 @@ prod(app)
 routes(app)
 app.use(error)
 
-if (process.env.NODE_ENV !== "test") {
-  const port = process.env.PORT || 3000
-  app.listen(port, () => winston.info(`Listening on port ${port}...`))
+const PORT = process.env.PORT || 3000
+const server = app.listen(PORT, () => winston.info(`Listening on port ${PORT}...`))
+
+server.on("error", (e: any) => {
+  if (e.code === "EADDRINUSE") {
+    console.error("Address in use, retrying...")
+    setTimeout(() => {
+      server.close()
+      server.listen(PORT)
+    }, 1000)
+  }
+})
+
+if (process.env.NODE_ENV === "test") {
+  server.close()
 }
 
-export default app
+export { server, PORT }

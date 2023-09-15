@@ -1,14 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest"
 import request from "supertest"
 import { User } from "../../../src/models/user"
-import { IncomingMessage, Server, ServerResponse } from "http"
-import app from "../../../src/index.js"
-
-let server: Server<typeof IncomingMessage, typeof ServerResponse>
+import { server, PORT } from "../../../src/index.js"
 
 describe("/api/users", () => {
   beforeEach(async () => {
-    server = app.listen(3000)
+    server.listen(PORT)
   })
 
   afterEach(async () => {

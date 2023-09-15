@@ -4,7 +4,7 @@ import { User } from "../../../src/models/user.js"
 import { Budget } from "../../../src/models/budget.js"
 import { server, PORT } from "../../../src/index.js"
 
-describe("auth middleware", () => {
+describe("/api/auth/", () => {
   let token = ""
 
   beforeEach(async () => {
