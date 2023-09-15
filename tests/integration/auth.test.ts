@@ -3,6 +3,7 @@ import { IncomingMessage, Server, ServerResponse } from "http"
 import request from "supertest"
 import { User } from "../../src/models/user.js"
 import { Budget } from "../../src/models/budget.js"
+import app from "../../src/index.js"
 
 let server: Server<typeof IncomingMessage, typeof ServerResponse>
 
@@ -10,7 +11,7 @@ describe("auth middleware", () => {
   let token = ""
 
   beforeEach(async () => {
-    server = (await import("../../src/index.js")).default
+    server = app.listen(3002)
     token = User.generateAuthToken({ name: "user1" } as any)
   })
 

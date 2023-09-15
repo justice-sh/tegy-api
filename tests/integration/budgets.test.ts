@@ -3,12 +3,13 @@ import request from "supertest"
 import { Budget } from "../../src/models/budget"
 import { IncomingMessage, Server, ServerResponse } from "http"
 import { User } from "../../src/models/user"
+import app from "../../src/index.js"
 
 let server: Server<typeof IncomingMessage, typeof ServerResponse>
 
 describe("/api/budgets", () => {
   beforeEach(async () => {
-    server = (await import("../../src/index.js")).default
+    server = app.listen(3001)
   })
 
   afterEach(async () => {

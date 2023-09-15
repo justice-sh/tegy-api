@@ -8,23 +8,24 @@ class Database extends Transport {
     super({ ...opts })
   }
 
-  log(info: any, callback: () => void) {
+  async log(info: any, callback: () => void) {
     const { os, error, process, trace, ...rest } = info
+    const colRef = getFirestore().collection("logs")
 
-    getFirestore()
-      .collection("logs")
-      .add({
-        ...rest,
-        timestamp: Date.now(),
-        date: rest.date || new Date(),
-      })
-      .then((v) => {
-        callback()
+    const dates = { timestamp: Date.now(), date: rest.date || new Date() }
 
-        setImmediate(() => {
-          this.emit("logged", info)
-        })
+    try {
+      await colRef.add({ ...rest, ...dates })
+    } catch (error: any) {
+      await colRef.add({ message: "Could not write error", error: rest.message || "", ...dates })
+      console.log("Could not write this error to db:")
+    } finally {
+      callback()
+
+      setImmediate(() => {
+        this.emit("logged", info)
       })
+    }
   }
 }
 
