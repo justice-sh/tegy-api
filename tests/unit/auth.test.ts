@@ -2,7 +2,7 @@ import { Request, Response } from "express"
 import { describe, expect, it, vi } from "vitest"
 import auth from "../../src/middlewares/auth"
 import { User } from "../../src/models/user"
-import { PORT, app } from "../../src/index.js"
+import app, { PORT } from "../../src/app.js"
 
 describe("auth middleware", () => {
   it("should populate req.params.user with the payload of a valid JWT", () => {

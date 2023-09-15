@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest"
 import request from "supertest"
 import { User } from "../../../src/models/user"
-import { app } from "../../../src/index.js"
+import app from "../../../src/app.js"
 
 describe("/api/users", () => {
   afterEach(async () => {
