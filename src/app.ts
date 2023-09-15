@@ -21,7 +21,4 @@ prod(app)
 routes(app)
 app.use(error)
 
-const PORT = process.env.PORT || 3000
-
-export { PORT }
 export default app

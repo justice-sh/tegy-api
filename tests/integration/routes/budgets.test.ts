@@ -19,9 +19,6 @@ describe("/api/budgets", () => {
     it("should return a single budget", async () => {
       const budget = await Budget.create({ name: "budget1", userId: "user1" })
 
-      const [found] = await Budget.find({ id: budget.id })
-      console.log(budget.id, found.id, budget.id === found.id)
-
       const res = await request(app).get("/api/budgets/" + budget.id)
 
       expect(res.status).toBe(200)

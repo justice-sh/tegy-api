@@ -17,7 +17,6 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   const [budget] = await Budget.find({ id: req.params.id })
-  console.log(budget, req.params.id)
   if (!budget) return res.status(404).send("The budget with the given ID was not found.")
 
   delete (budget as any).userId

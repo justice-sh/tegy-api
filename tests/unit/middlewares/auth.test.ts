@@ -1,12 +1,15 @@
 import { Request, Response } from "express"
 import { describe, expect, it, vi } from "vitest"
-import auth from "../../src/middlewares/auth"
-import { User } from "../../src/models/user"
-import app, { PORT } from "../../src/app.js"
+import auth from "../../../src/middlewares/auth"
+import { User } from "../../../src/models/user"
+import app from "../../../src/app.js"
 
 describe("auth middleware", () => {
   it("should populate req.params.user with the payload of a valid JWT", () => {
-    const server = app.listen(PORT)
+    // The line below is necessary. We just need to use it for env vars to be loaded.
+    // If you comment it out this test will fail. Try and see.
+    const server = app
+
     const user = { id: "userid" }
     const token = User.generateAuthToken(user as any)
 
@@ -19,6 +22,5 @@ describe("auth middleware", () => {
     auth(req, res, next)
 
     expect(req.params.user).toMatchObject(user)
-    server.close()
   })
 })
