@@ -39,4 +39,4 @@ if (process.env.NODE_ENV === "test") {
   server.close()
 }
 
-export { server, PORT }
+export { server, PORT, app }

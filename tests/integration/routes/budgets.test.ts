@@ -2,23 +2,18 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest"
 import request from "supertest"
 import { Budget } from "../../../src/models/budget"
 import { User } from "../../../src/models/user"
-import { server, PORT } from "../../../src/index.js"
+import { app } from "../../../src/index.js"
 
 describe("/api/budgets", () => {
-  beforeEach(async () => {
-    server.listen(PORT)
-  })
-
   afterEach(async () => {
     await Budget.clear()
-    server.close()
   })
 
   describe("GET /:id", () => {
     it("should return 404 if budget with given ID was not found", async () => {
       await Budget.create({ name: "budget1", userId: "user1" })
 
-      const res = await request(server).get("/api/budgets/dkdk")
+      const res = await request(app).get("/api/budgets/dkdk")
 
       expect(res.status).toBe(404)
     })
@@ -26,7 +21,7 @@ describe("/api/budgets", () => {
     it("should return a single budget", async () => {
       const budget = await Budget.create({ name: "budget1", userId: "user1" })
 
-      const res = await request(server).get("/api/budgets/" + budget.id)
+      const res = await request(app).get("/api/budgets/" + budget.id)
 
       expect(res.status).toBe(200)
       expect(res.body).toHaveProperty("name", "budget1")
@@ -40,7 +35,7 @@ describe("/api/budgets", () => {
         Budget.create({ name: "budget2", userId: "user2" }),
       ])
 
-      const res = await request(server).get("/api/budgets")
+      const res = await request(app).get("/api/budgets")
 
       expect(res.status).toBe(200)
       expect(res.body.length).toBe(2)
@@ -62,7 +57,7 @@ describe("/api/budgets", () => {
       userId = "",
       token = ""
 
-    const exec = () => request(server).post("/api/budgets").set("x-auth-token", token).send({ name, userId })
+    const exec = () => request(app).post("/api/budgets").set("x-auth-token", token).send({ name, userId })
 
     beforeEach(() => {
       name = "budget1"
@@ -111,7 +106,7 @@ describe("/api/budgets", () => {
       id = "123"
 
     const exec = () =>
-      request(server)
+      request(app)
         .put("/api/budgets/" + id)
         .set("x-auth-token", token)
         .send({ name })
@@ -165,7 +160,7 @@ describe("/api/budgets", () => {
       id = "123"
 
     const exec = () =>
-      request(server)
+      request(app)
         .delete("/api/budgets/" + id)
         .set("x-auth-token", token)
 
