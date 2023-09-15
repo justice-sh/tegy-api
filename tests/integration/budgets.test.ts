@@ -17,6 +17,25 @@ describe("/api/budgets", () => {
     server.close()
   })
 
+  describe("GET /:id", () => {
+    it("should return 404 if budget with given ID was not found", async () => {
+      await Budget.create({ name: "budget1", userId: "user1" })
+
+      const res = await request(server).get("/api/budgets/dkdk")
+
+      expect(res.status).toBe(404)
+    })
+
+    it("should return a single budget", async () => {
+      const budget = await Budget.create({ name: "budget1", userId: "user1" })
+
+      const res = await request(server).get("/api/budgets/" + budget.id)
+
+      expect(res.status).toBe(200)
+      expect(res.body).toHaveProperty("name", "budget1")
+    })
+  })
+
   describe("GET /", () => {
     it("should return all budgets", async () => {
       await Promise.all([
@@ -38,25 +57,6 @@ describe("/api/budgets", () => {
           expect.objectContaining({ name: "budget2" }),
         ])
       )
-    })
-  })
-
-  describe("GET /:id", () => {
-    it("should return 404 if budget with given ID was not found", async () => {
-      await Budget.create({ name: "budget1", userId: "user1" })
-
-      const res = await request(server).get("/api/budgets/dkdk")
-
-      expect(res.status).toBe(404)
-    })
-
-    it("should return a single budget", async () => {
-      const budget = await Budget.create({ name: "budget1", userId: "user1" })
-
-      const res = await request(server).get("/api/budgets/" + budget.id)
-
-      expect(res.status).toBe(200)
-      expect(res.body).toHaveProperty("name", "budget1")
     })
   })
 
@@ -185,20 +185,13 @@ describe("/api/budgets", () => {
       expect(res.status).toBe(401)
     })
 
-    it("should return 400 if budget with given ID does not exist", async () => {
-      const res = await exec()
-
-      expect(res.status).toBe(400)
-    })
-
-    it("should delete budget if found", async () => {
+    it("should delete budget", async () => {
       const budget = await Budget.create({ name, userId: "user1" })
       id = budget.id
 
       const res = await exec()
 
       expect(res.status).toBe(200)
-      expect(res.body).toEqual(expect.objectContaining({ name, id }))
     })
   })
 })

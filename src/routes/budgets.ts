@@ -46,15 +46,9 @@ router.put("/:id", auth, async (req: Request<any>, res: Response) => {
 })
 
 router.delete("/:id", auth, async (req: Request<any>, res: Response) => {
-  const [budget] = await Budget.find({ id: req.params.id })
-
-  if (!budget) return res.status(400).send("Budget with the given ID does not exist.")
-
   await Budget.delete(req.params.id)
 
-  delete (budget as any).userId
-
-  res.send(budget)
+  res.send("Successful")
 })
 
 export default router

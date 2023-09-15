@@ -39,5 +39,16 @@
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2",
     "vitest": "^0.34.3"
+  },
+  "nodemonConfig": {
+    "restartable": "rs",
+    "ignore": [
+      "node_modules/**/node_modules"
+    ],
+    "delay": "2500",
+    "env": {
+      "NODE_ENV": "development",
+      "NODE_CONFIG_DIR": "./src/config"
+    }
   }
 }
