@@ -15,7 +15,7 @@ describe("/api/users", () => {
     server.close()
   })
 
-  describe.only("POST /", () => {
+  describe("POST /", () => {
     let name = "",
       password = "",
       email = ""
