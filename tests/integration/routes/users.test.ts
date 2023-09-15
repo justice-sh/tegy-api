@@ -1,8 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest"
 import request from "supertest"
-import { User } from "../../src/models/user"
+import { User } from "../../../src/models/user"
 import { IncomingMessage, Server, ServerResponse } from "http"
-import app from "../../src/index.js"
+import app from "../../../src/index.js"
 
 let server: Server<typeof IncomingMessage, typeof ServerResponse>
 
