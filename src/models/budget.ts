@@ -4,26 +4,26 @@ import { DocData } from "../../types/index.js"
 import { z } from "zod"
 
 export class Budget {
-  private static _name_ = "budgets"
+  private static colId = "budgets"
 
   static create(data: InputData) {
-    return FirestoreDB.create<BudgetDoc>(Budget._name_, data)
+    return FirestoreDB.create<BudgetDoc>(Budget.colId, data)
   }
 
   static find(param: Partial<BudgetDoc> = {}) {
-    return FirestoreDB.find<BudgetDoc>(Budget._name_, param)
+    return FirestoreDB.find<BudgetDoc>(Budget.colId, param)
   }
 
   static update(id: string, data: Pick<InputData, "name">) {
-    return FirestoreDB.update<BudgetDoc>(Budget._name_, id, data)
+    return FirestoreDB.update<BudgetDoc>(Budget.colId, id, data)
   }
 
   static delete(id: string) {
-    return FirestoreDB.delete(Budget._name_, id)
+    return FirestoreDB.delete(Budget.colId, id)
   }
 
   static clear() {
-    return FirestoreDB.clear(Budget._name_)
+    return FirestoreDB.clear(Budget.colId)
   }
 
   static validate(data: InputData) {
