@@ -39,7 +39,7 @@ export class User {
 
     const list = await colRef.get()
 
-    return list.docs.map((doc) => doc.data()) as UserDoc[]
+    return list.docs.map((doc) => doc.data()).filter((data) => data) as UserDoc[]
   }
 
   static async update(id: string, data: Pick<InputData, "name">): Promise<UserDoc> {

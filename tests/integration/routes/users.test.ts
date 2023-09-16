@@ -4,6 +4,10 @@ import { User } from "../../../src/models/user"
 import app from "../../../src/app.js"
 
 describe("/api/users", () => {
+  afterEach(async () => {
+    await User.clear()
+  })
+
   describe("POST /", () => {
     let name = "",
       password = "",
@@ -13,12 +17,8 @@ describe("/api/users", () => {
 
     beforeEach(() => {
       name = "user1"
-      password = "Password#1"
       email = "me@gmail.com"
-    })
-
-    afterEach(async () => {
-      await User.clear()
+      password = "Password#1"
     })
 
     test("should return 400 if name is less than 3 characters", async () => {
@@ -56,10 +56,21 @@ describe("/api/users", () => {
     test("should create user if valid", async () => {
       const res = await exec()
 
-      const [user] = await User.find({ email })
+      expect(res.status).toBe(200)
+      expect(res.body).toEqual(expect.objectContaining({ name, email }))
+    })
+
+    test("should return user's id", async () => {
+      const res = await exec()
 
       expect(res.status).toBe(200)
-      expect(res.body).toEqual(expect.objectContaining({ name, email, id: user.id }))
+      expect(res.body).toHaveProperty("id")
+    })
+
+    test("should not return password field", async () => {
+      const res = await exec()
+
+      expect(res.status).toBe(200)
       expect(res.body).not.toHaveProperty("password")
     })
   })
@@ -72,10 +83,6 @@ describe("/api/users", () => {
 
     beforeEach(() => {
       token = User.generateAuthToken({ id } as any)
-    })
-
-    afterEach(async () => {
-      await User.clear()
     })
 
     test("should return 401 if client is not logged in", async () => {
