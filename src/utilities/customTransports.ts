@@ -9,18 +9,24 @@ class Database extends Transport {
   }
 
   async log(info: any, callback: () => void) {
-    const { os, error, process, trace, ...rest } = info
+    let { os, error, process, trace, ...rest } = info
     const colRef = getFirestore().collection("logs")
+
+    const [, splat] = Object.getOwnPropertySymbols(rest)
 
     const dates = { timestamp: Date.now(), date: rest.date || new Date() }
 
+    const er = { level: rest.level, message: rest.message, ...dates, ...rest[splat as any][0] }
+
+    // console.log(er)
+
     try {
-      await colRef.add({ ...rest, ...dates })
+      await colRef.add(er)
     } catch (error: any) {
       await colRef.add({ message: "Could not write error", error: rest.message || "", ...dates })
       console.log("Could not write this error to db:")
     } finally {
-      callback()
+      if (typeof callback === "function") callback()
 
       setImmediate(() => {
         this.emit("logged", info)

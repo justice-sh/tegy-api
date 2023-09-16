@@ -1,12 +1,12 @@
 import { Request, Response } from "express"
-import { describe, expect, it, vi } from "vitest"
+import { describe, expect, test, vi } from "vitest"
 import auth from "../../../src/middlewares/auth"
 import { User } from "../../../src/models/user"
 import app from "../../../src/app.js"
 
 describe("auth middleware", () => {
-  it("should populate req.params.user with the payload of a valid JWT", () => {
-    // The line below is necessary. We just need to use it for env vars to be loaded.
+  test("should populate req.params.user with the payload of a valid JWT", () => {
+    // The line below is necessary. We need it to load the app and essentially, env vars
     // If you comment it out this test will fail. Try and see.
     const server = app
 
