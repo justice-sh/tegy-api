@@ -16,9 +16,8 @@ const app = express()
 db()
 logging()
 config()
-if (process.env.NODE_ENV === "development") dev(app)
-if (process.env.NODE_ENV === "production") prod(app)
+dev(app)
+prod(app)
 routes(app)
 app.use(error)
-
 export default app
