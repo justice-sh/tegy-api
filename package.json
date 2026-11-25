@@ -12,45 +12,45 @@
     "start": "node ./dist/src/index.js"
   },
   "engines": {
-    "node": "18.15.0"
+    "node": ">= 26"
   },
   "author": "Justice N.",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.1.1",
-    "compression": "^1.7.4",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
+    "bcrypt": "^6.0.0",
+    "compression": "^1.8.2",
+    "dotenv": "^18.0.10",
+    "express": "^5.3.0",
     "express-async-errors": "^3.1.1",
-    "firebase-admin": "^11.10.1",
-    "helmet": "^7.0.0",
-    "jsonwebtoken": "^9.0.2",
-    "morgan": "^1.10.0",
-    "node-appwrite": "^10.0.1",
-    "winston": "^3.10.0",
-    "zod": "^3.22.2"
+    "firebase-admin": "^14.5.1",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "morgan": "^1.12.1",
+    "node-appwrite": "^32.1.0",
+    "winston": "^3.19.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.0",
-    "@types/compression": "^1.7.3",
-    "@types/express": "^4.17.17",
-    "@types/morgan": "^1.9.5",
-    "@types/node": "^20.5.9",
-    "@types/supertest": "^2.0.12",
-    "@vitest/coverage-v8": "^0.34.4",
-    "nodemon": "^3.0.1",
-    "rimraf": "^5.0.1",
-    "supertest": "^6.3.3",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.2.2",
-    "vitest": "^0.34.3"
+    "@types/bcrypt": "^6.0.0",
+    "@types/compression": "^1.8.1",
+    "@types/express": "^5.0.6",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^26.6.10",
+    "@types/supertest": "^7.2.1",
+    "@vitest/coverage-v8": "^5.1.2",
+    "nodemon": "^3.1.14",
+    "rimraf": "^6.1.4",
+    "supertest": "^7.3.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.2"
   },
   "nodemonConfig": {
     "restartable": "rs",
     "ignore": [
       "node_modules/**/node_modules"
     ],
-    "delay": "2500",
+    "delay": 2500,
     "env": {
       "NODE_ENV": "development",
       "NODE_CONFIG_DIR": "./src/config"
